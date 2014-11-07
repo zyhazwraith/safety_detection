@@ -1,0 +1,120 @@
+﻿
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>SC-Check for you!</title>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/fx.slide.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/z-index.css" type="text/css" media="screen" />
+	    <script id="jquery_172" type="text/javascript" class="library" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/js.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/ajax.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/check.js"></script>
+       
+	</head>
+	<body>
+
+    	
+    	  <div id="Logo">
+    		<a href="./" id="logoLink"></a> 
+		</div> 
+<div style="width:1200px; text-align:center; margin:0 auto;	height:600px;"> 
+   	<div id="sign">
+    		<button id="toggleLogin"><font size="+1"><strong>login</strong></font>&nbsp;</button>|<button id="toggleRegister">&nbsp;<font size="+1"><strong>sign up</strong></font></button>
+    </div>
+        
+       
+        <!-- Login -->
+	<div class="loginbox">
+		<div id="login" style="margin:0 auto; height: auto;">
+			<div class="loginContent">
+				<form action="#">
+					{{ csrftoken|safe }}
+					<label for="log"><b>Username:</b></label>
+                    <br />
+					<input class="field" type="text" name="log" id="log" value="" size="23" />
+                    <br />
+					<label for="pwd"><b>Password:</b></label>
+                    <br />
+					<input class="field" type="password" name="pwd" id="pwd" value="" size="23" />
+                    <br />
+					<input type="button" name="submit" value="" class="button_login" onclick="loadXMLDoc()" />
+				</form>
+				<div class="right">
+                	 <a href="javascript:void(0);">Lost your password?</a>
+                </div>
+			</div>
+			<div class="loginClose"><a href="#" id="closeLogin">Close</a></div>
+		</div> 
+	</div> 
+	<!-- /login -->
+    
+    
+    <!-- Register -->
+    <div class="Registerbox">
+		<div id="Register" style="margin:0 auto; height: auto;">
+			<div class="RegisterContent">
+				<form action="#">
+					<label for="log"><b>Username:</b></label>
+                    <br />
+					<input class="field" type="text" name="log" id="rlog" value="" size="23" onblur="check_name(this)" />
+                    <br />
+					<label for="pwd"><b>Password:</b></label>
+                    <br />
+					<input class="field" type="password" name="pwd" id="rpwd" value="" size="23" onblur="check_len(this)" />
+                    <br />
+                    <label for="conpwd"><b>Confirm Password:</b></label>
+                    <br />
+					<input class="field" type="password" name="conpwd" id="rconpwd" value="" size="23" onblur="check_pass(this,rpwd)" />
+                    <br />
+                    <label for="mail"><b>E-mail:</b></label>
+                    <br />
+					<input class="field" type="text" name="mail" id="rmail" value="" size="23" onblur="check_mail(this)" />
+                    <br />
+					<input type="button" name="submit" value="" class="button_Register" onclick="rloadXMLDoc()" />
+				</form>
+				 <div id="rtip"></div>
+			</div>
+			<div class="RegisterClose"><a href="javascript:void(0);" id="closeRegister">Close</a></div>
+		</div> 
+	</div> 
+    
+    <!--/Register-->
+    
+    <!--z-index-->
+    
+<div id="light" class="white_content">
+<div id="tipclose">
+<a href="javascript:void(0)" onclick="closetip()">Close</a></div>
+<br>
+<p id="tip"></p>
+</div>
+<div id="fade" class="black_overlay"></div>
+    
+<div class="bigbox">
+<div class="box">
+
+
+        <ul class="btn">
+        <li><a href="javascript:void(0);" onclick="getinfo('home')">Home</a></li>
+        
+        <li><a href="javascript:void(0);" onclick="">News</a></li>
+        
+        <li><a href="javascript:void(0);" onclick="getinfo('usage')">Usage</a></li>
+        
+        <li><a href="javascript:void(0);" onclick="getinfo('attention')">Attention</a></li>
+        
+        <li><a href="javascript:void(0);" onclick="getinfo('about')">About</a></li>
+        </ul>
+        
+
+</div>
+
+<div class = "mm" id="mm">
+</div>
+</div>
+</div>  
+
+
+</body>
+</html>
