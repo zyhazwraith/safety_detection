@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.middleware.csrf import get_token
-from detection import Maplog
+from detection.models import Maplog
 import re
 
 def build_html_response(request):
@@ -23,7 +23,9 @@ def index(request):
 	return render_to_response('detection/index.html', {'csrftoken': csrftoken}, RequestContext(request))
 
 def test(request, says):
-	return render_to_response('detection/test.html', {'says': says}, RequestContext(request))
+	user = request.user
+	logs = Maplog.objects.filter(user__exact = user)
+	return render_to_response('detection/test.html', {'says': says, 'logs': logs}, RequestContext(request))
 
 def user_login(request):
 	msg = ""
@@ -110,7 +112,10 @@ def combined_msg(success, msg):
 		premsg = ":("	
 	return  premsg+ "<br />" + msg + "<br />" + "Auto go back in 3 sec .<br /><br />"
 
+
+"""
 def sqlmap(request):
+	user = request.user
 	if request.method == 'POST':
 		if not user.is_authenticated:
 			return HttpResponseRedirect('/index/')
@@ -119,10 +124,17 @@ def sqlmap(request):
 		if pattern.match(url):
 			maplog = Maplog(user=user, url=url)
 			if maplog:
+				#Add action
 				maplog.save()
 		else:
 			return HttpResponse("Invalid url")
 	return HttpResponseRedirect('/user/')	
 
 def maplog(request):
-	
+	user = request.user
+	if not user.is_authenticated:
+		return HttpResponseRedirect('/index/')
+	else:
+		logs = Maplog.objects.filter(user__exact=user)
+	return 
+"""

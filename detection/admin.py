@@ -1,7 +1,7 @@
 from django.contrib import admin
 from detection.models import Maplog
 
-class MapAmin(admin.ModelAdmin):
-	list_display = ('username', 'date', 'url')
+class MapAdmin(admin.ModelAdmin):
+	list_display = ('user', 'date', 'url')
 
-admin.site.register(Maplog)
+admin.site.register(Maplog, MapAdmin)
