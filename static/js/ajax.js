@@ -49,7 +49,7 @@ function closetip()
 
 function turnback(){
 	document.getElementById("tip").innerText = "";
-	self.location.href="./index.php";
+	self.location.href="./";
 }
 
 function rloadXMLDoc()
@@ -79,7 +79,7 @@ rxmlhttp.onreadystatechange=function()
     document.getElementById("tip").innerHTML=rxmlhttp.responseText;
     }
   }
-rxmlhttp.open("POST","./register.php",true);
+rxmlhttp.open("POST","../register/",true);
 rxmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 rxmlhttp.send("rname="+rname+"&rpass="+rpass+"&rconpass="+rconpass+"&rmail="+rmail);
 setTimeout('comeon()',2000);
@@ -103,6 +103,6 @@ ixmlhttp.onreadystatechange=function()
     document.getElementById("mm").innerHTML=ixmlhttp.responseText;
     }
   }
-ixmlhttp.open("GET","./information.php?infoname="+name,true);
+ixmlhttp.open("GET","../information/?infoname="+name,true);
 ixmlhttp.send();
 }

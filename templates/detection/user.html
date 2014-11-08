@@ -1,21 +1,26 @@
-﻿<!DOCTYPE html>
+﻿
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>SC-Check for you!</title>
-        <link rel="stylesheet" href="css/style.css" type="text/css" />
-        <link rel="stylesheet" href="css/fx.slide.css" type="text/css" media="screen" />
-	    <script id="jquery_172" type="text/javascript" class="library" src="js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="js/js.js"></script>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/fx.slide.css" type="text/css" media="screen" />
+	    <script id="jquery_172" type="text/javascript" class="library" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/js.js"></script>
 	</head>
 	<body>
     	
     	<div id="Logo">
     		<a href="#" id="logoLink"></a> 
 		</div> 
-<div style="width:1200px; text-align:center; margin:0 auto;"> 
+<div style="width:1200px; text-align:center; margin:0 auto; height:600px"> 
    	<div id="sign">
-    		<font size="+1"><strong>Hello admin</strong></font>&nbsp;|<a href="#">&nbsp;<font size="+1"><strong>user center</strong></font></a>
+{% if user.is_authenticated %}
+     <font size="+1"><strong>Hello {{ user.username }}</strong></font>&nbsp;|<a href="./">&nbsp;<font size="+1"><strong>User center</strong></font></a>
+{% else %}
+    <script>window.location.href="/index";</script>
+{% endif %}
+
     </div>
   
 <div class="bigbox">
@@ -24,15 +29,15 @@
 
 
         <ul class="btn">
-        <li><a href="#">Home</a></li>
+        <li><a href="../">Home</a></li>
         
-        <li><a href="#">News</a></li>
+        <li><a href="../">News</a></li>
         
-        <li><a href="#">Usage</a></li>
+        <li><a href="../">Usage</a></li>
         
-        <li><a href="#">Attention</a></li>
+        <li><a href="../">Attention</a></li>
         
-        <li><a href="#">About</a></li>
+        <li><a href="../">About</a></li>
         </ul>
         
 
@@ -40,17 +45,28 @@
 
 <div class="leftlist">
 	<ul id="llist" class="effect square button">
-        <li><a href="#">User Home</a></li>
-    	<li><a href="pro.html">Pro Check</a></li>
-        <li><a href="#">Web Check</a></li>
-        <li><a href="#">Record</a></li>
-        <li><a href="#">User Info</a></li>
-        <li><a href="#">Suggestions</a></li>
-        <li><a href="#">Log out</a></li>
+        <li><a href="javascript:void(0);" onclick="maininfo('uhome')">User Home</a></li>
+    	<li><a href="javascript:void(0);" onclick="maininfo('prochk')">Pro Check</a></li>
+        <li><a href="javascript:void(0);" onclick="maininfo('webchk')">Web Check</a></li>
+        <li><a href="javascript:void(0);" onclick="maininfo('rec')">Records</a></li>
+        <li><a href="javascript:void(0);" onclick="maininfo('uinfo')">User Info</a></li>
+        <li><a href="javascript:void(0);" onclick="maininfo('sugg')">Suggestions</a></li>
+        <li><a href="/logout/">Log out</a></li>
     </ul>
 </div>
-
-</div>
+{{ csrftoken|safe }}
+<div class="main" id="main">
+<p><font size="+2">→Start your security check now !</font></p>
+<br />
+<p style="text-align:center"><font size="+1"><a href="javascript:void(0);" onClick="maininfo('webchk')">Web check</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onClick="">Program check</a></font></p>
+<br />
+<p><font size="+2"><a href="javascript:void(0);" onClick="maininfo('rec')">→Click here to show you the records .</a></font></p>
+<br />
+<p><font size="+2">→Something about your information .</font></p>
+<br />
+<p style="text-align:center"><font size="+1"><a href="javascript:void(0);" onClick="maininfo('uinfo')">My information</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onClick="">Lost my password</a></font></p>
+<br />
+<p><font size="+2"><a href="javascript:void(0);" onClick="maininfo('sugg')">→Do you have some suggestions to tell us ? .</a></font></p>
 </div>  
 
 

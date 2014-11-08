@@ -12,6 +12,10 @@
 		{{ log.url }}
 		<br />
 		{% endfor %}
+		<br />
+		{% if user.is_authenticated %}
+		<h3>{{ user.username }}</h3>
+		{% endif %}
 		<img src="{{ STATIC_URL }}rango.jpg" alt="No pic" />
 	</body>
 </html>

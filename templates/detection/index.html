@@ -20,7 +20,11 @@
 		</div> 
 <div style="width:1200px; text-align:center; margin:0 auto;	height:600px;"> 
    	<div id="sign">
-    		<button id="toggleLogin"><font size="+1"><strong>login</strong></font>&nbsp;</button>|<button id="toggleRegister">&nbsp;<font size="+1"><strong>sign up</strong></font></button>
+{% if user.is_authenticated %}
+     <font size="+1"><strong>Hello {{ user.username }}</strong></font>&nbsp;|<a href="/user/">&nbsp;<font size="+1"><strong>User center</strong></font></a>
+{% else %}
+	<button id="toggleLogin"><font size="+1"><strong>login</strong></font>&nbsp;</button>|<button id="toggleRegister">&nbsp;<font size="+1"><strong>sign up</strong></font></button>
+{% endif %}
     </div>
         
        
@@ -110,8 +114,7 @@
 
 </div>
 
-<div class = "mm" id="mm">
-</div>
+<div class="mm" id="mm"><img src="{{ STATIC_URL }}images/web.png"><p><font size="+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How do you know that your web can get rid of being hacked ? There are two ways to show you the security of your web,by tools and by people. You can upload your website source or submit the url. Then you can choose the way you want be checked.</font></p>----------------------------------------------------------------------------------------------------------------------<br><br><img src="{{ STATIC_URL }}images/pro.png"><p><font size="+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Have you ever heard "overflow bug" ? It's a fatal bug of a program . Here there is a tool can help you find the overflow position if your program has this kind of bug . By this way , you can debug easily . In addition , the speed of the check may be a liitle slow . Wait patiently till it comletes .</font></p></div>
 </div>
 </div>  
 

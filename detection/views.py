@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.middleware.csrf import get_token
 from detection.models import Maplog
-import re
+import re, os
+from detection.info import info_dict
 
 def build_html_response(request):
     # build head
@@ -23,6 +24,11 @@ def index(request):
 	return render_to_response('detection/index.html', {'csrftoken': csrftoken}, RequestContext(request))
 
 def test(request, says):
+#	os.system("python sqlmap/sqlmap.py")
+	url = "http://www.baidu.com"
+	user = "test"
+#	os.system("echo 4 > logs/%s/a.txt" % url)
+#	os.system("python sqlmap/sqlmap.py -u %s --batch --purge-output > logs/sqlmap/%s/%s.txt" % (url, user, url[7:]))
 	user = request.user
 	logs = Maplog.objects.filter(user__exact = user)
 	return render_to_response('detection/test.html', {'says': says, 'logs': logs}, RequestContext(request))
@@ -76,6 +82,7 @@ def register(request):
 								user.is_staff = False
 								user.save()
 								registered = True
+								os.system("mkdir logs/sqlmap/%s" % username)
 								return HttpResponse(combined_msg(registered, msg))
 							else:
 								msg = "Register failed"
@@ -88,7 +95,8 @@ def register(request):
 
 def name_check(name):
 	ulenth = len(name)
-	if ulenth < 6 or ulenth > 20:
+	if ulenth < 4 or ulenth > 20:
+#	if ulenth > 20:
 		return "The length of username should be 6-20"
 	ills = ["\"","'","(",")","\\","/"]
 	for i in ills:
@@ -113,23 +121,30 @@ def combined_msg(success, msg):
 	return  premsg+ "<br />" + msg + "<br />" + "Auto go back in 3 sec .<br /><br />"
 
 
-"""
 def sqlmap(request):
 	user = request.user
+	if not user.is_authenticated:
+		return HttpResponseRedirect('/index/')
 	if request.method == 'POST':
-		if not user.is_authenticated:
-			return HttpResponseRedirect('/index/')
 		pattern = re.compile(r'[a-zA-z]+://[^\s]*')
 		url = request.POST['url']
 		if pattern.match(url):
 			maplog = Maplog(user=user, url=url)
 			if maplog:
 				#Add action
+				os.system("python sqlmap/sqlmap.py -u %s --batch --purge-output > logs/sqlmap/%s/%s" % url, user.username, url[7:])
 				maplog.save()
 		else:
 			return HttpResponse("Invalid url")
+	elif request.method == 'GET':
+		filename = "logs/sqlmap/%s/%s" % (user.username, request.GET['file'])
+		log = ""
+		with open(filename) as f:
+			log = f.read()
+		return HttpResponse(log)
 	return HttpResponseRedirect('/user/')	
 
+"""
 def maplog(request):
 	user = request.user
 	if not user.is_authenticated:
@@ -138,3 +153,14 @@ def maplog(request):
 		logs = Maplog.objects.filter(user__exact=user)
 	return 
 """
+
+def user_center(request):
+	csrftoken = build_html_response(request)
+	return render_to_response('detection/user.html', {'csrftoken': csrftoken}, RequestContext(request))
+
+def info(request):
+	if request.method == 'GET':
+		infoname = request.GET['infoname']
+		return HttpResponse(info_dict[infoname])
+	else:
+		pass
